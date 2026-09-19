@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Join the Wheel!</title>
+<title>Infinite Radio Conference 2026</title>
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -479,10 +479,6 @@ function showContinueGate() {
   setTimeout(goToProgram, SPLASH_DELAY_MS);
 }
 
-if (localStorage.getItem(DEVICE_KEY)) {
-  showContinueGate();
-}
-
 form.addEventListener('submit', function(e) {
   e.preventDefault();
   var name = input.value.trim();
@@ -508,8 +504,6 @@ form.addEventListener('submit', function(e) {
     body: JSON.stringify({ name: name, station: station })
   })
     .then(function() {
-      localStorage.setItem(DEVICE_KEY, '1');
-      localStorage.setItem(DEVICE_NAME_KEY, name);
       showContinueGate();
     })
     .catch(function() {
