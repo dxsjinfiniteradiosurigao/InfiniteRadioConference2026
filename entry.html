@@ -206,27 +206,16 @@
     100% { opacity: 0; }
   }
 
-  .splash-rays {
-    position: absolute;
-    width: 900px;
-    height: 900px;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-    background: conic-gradient(
-      from 0deg,
-      rgba(77,123,255,0.18) 0deg, transparent 18deg,
-      rgba(212,0,31,0.16) 40deg, transparent 58deg,
-      rgba(77,123,255,0.14) 90deg, transparent 108deg,
-      rgba(212,0,31,0.16) 140deg, transparent 158deg,
-      rgba(77,123,255,0.18) 190deg, transparent 208deg,
-      rgba(212,0,31,0.14) 240deg, transparent 258deg,
-      rgba(77,123,255,0.16) 290deg, transparent 308deg,
-      rgba(212,0,31,0.18) 340deg, transparent 360deg
-    );
-    animation: raysSpin 9s linear infinite;
-    z-index: 0;
+  #continueGate {
+    background: linear-gradient(120deg, #0a0a1c, #1a1040, #3a0a2a, #0a1040, #0a0a1c);
+    background-size: 400% 400%;
+    animation: gateGradient 6s ease infinite;
   }
-  @keyframes raysSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+  @keyframes gateGradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
   .splash-wrap {
     position: relative;
@@ -410,7 +399,6 @@
 
   <div id="continueGate">
     <div class="splash-flash"></div>
-    <div class="splash-rays"></div>
     <div class="splash-wrap">
       <div class="splash-badge">
         <div class="ring"></div>
