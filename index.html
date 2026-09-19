@@ -193,6 +193,37 @@
   .details li { font-size: .8rem; opacity: .75; list-style: disc; line-height: 1.4; }
 
   footer { text-align: center; margin-top: 30px; opacity: .4; font-size: .72rem; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  .team-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 16px 14px;
+    text-align: center;
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .team-card.reveal { animation: revealIn .6s cubic-bezier(.2,.8,.2,1) forwards; }
+  .team-avatar {
+    width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .82rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--blue), var(--red));
+  }
+  .team-role {
+    font-size: .66rem; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 800; color: #cfe0ff; opacity: .85;
+  }
+  .team-name { font-size: .88rem; font-weight: 700; line-height: 1.3; }
 </style>
 </head>
 <body>
@@ -215,11 +246,35 @@
 const SCHEDULE = {"day1": {"label": "Day 1", "date": "2026-09-21", "title": "Arrival, Orientation and Networking", "theme": "Getting Connected as One Infinite Radio Network", "items": [{"start": "08:00", "end": "08:00", "label": "8:00 AM onwards", "title": "Arrival and Registration of Participants"}, {"start": "08:00", "end": "09:00", "label": "8:00 AM \u2013 9:00 AM", "title": "Check-in / Room Assignment / Distribution of Conference Kits"}, {"start": "09:00", "end": "12:00", "label": "9:00 AM \u2013 12:00 NN", "title": "Assembly of Delegates (Conference Hall)", "details": ["Opening Prayer and National Anthem"]}, {"start": "12:00", "end": "13:00", "label": "12:00 NN \u2013 1:00 PM", "title": "Welcome Remarks", "speaker": "Mr. Ulysis Salabao", "speakerRole": "DXSJ 93.3 Station Manager / Broadcast Company President"}, {"start": "13:00", "end": "14:00", "label": "1:00 PM \u2013 2:00 PM", "title": "Working Snacks & Network Introductions", "details": ["Introduction of Participating Infinite Radio Stations", "Conference Overview, Objectives, and Expected Outputs", "Getting to Know the Infinite Radio Network: Introduction of News Anchors, Technical Staff, and Participants", "LUNCH", "Back to Conference Hall", "Discussion: The Future of Collaborative News Broadcasting in Infinite Radio"]}, {"start": "14:00", "end": "15:00", "label": "2:00 PM \u2013 3:00 PM", "title": "Open Forum: Challenges and Experiences of Different Stations in News Production and Anchoring"}, {"start": "15:00", "end": "15:15", "label": "3:00 PM \u2013 3:15 PM", "title": "Snacks Break"}, {"start": "15:15", "end": "16:15", "label": "3:15 PM \u2013 4:15 PM", "title": "Presentation of the Proposed Nationwide Collaborative News Anchoring System"}, {"start": "16:15", "end": "18:15", "label": "4:15 PM \u2013 6:15 PM", "title": "Session 1: Proper Writing of Radio News Headlines", "speaker": "Lisa Monteros", "speakerRole": "Former Infinite Radio Station Manager & Maker of Ratsada Balita", "details": ["Discussion on clarity, accuracy, brevity, language consistency, and making headlines easy to understand and deliver on-air"]}, {"start": "19:00", "end": "19:00", "label": "7:00 PM onwards", "title": "Welcome Night / Fellowship / Socialization Activity"}, {"start": "21:30", "end": "21:30", "label": "9:30 PM onwards", "title": "Free Time / Preparation for Day 2"}]}, "day2": {"label": "Day 2", "date": "2026-09-22", "title": "Standardization, Collaboration and Technology", "theme": "One Standard, One Sound, One Infinite Radio", "items": [{"start": "06:30", "end": "07:30", "label": "6:30 AM \u2013 7:30 AM", "title": "Breakfast"}, {"start": "07:30", "end": "08:30", "label": "7:30 AM \u2013 8:30 AM", "title": "Personal Preparation / Assembly at Conference Hall", "details": ["Opening Prayer", "Recap of Day 1"]}, {"start": "08:30", "end": "09:30", "label": "8:30 AM \u2013 9:30 AM", "title": "Session 2: Standardizing News Intros and Outros Across Infinite Radio Stations", "details": ["Discussion on synchronized and consistent use of news introductions, transitions, attribution, and closing lines"]}, {"start": "09:30", "end": "09:45", "label": "9:30 AM \u2013 9:45 AM", "title": "Snacks Break"}, {"start": "09:45", "end": "11:00", "label": "9:45 AM \u2013 11:00 AM", "title": "Workshop: Improving and Standardizing Sample News Headlines, Intros, and Outros"}, {"start": "11:00", "end": "12:00", "label": "11:00 AM \u2013 12:00 NN", "title": "Session 3: Avoiding Overlapping and Duplicate News Across Stations", "details": ["Coordination among stations", "Sharing of news assignments", "Monitoring previously aired stories", "Identifying duplicate or similar stories", "Establishing a centralized system for news monitoring"]}, {"start": "12:00", "end": "13:00", "label": "12:00 NN \u2013 1:00 PM", "title": "Lunch"}, {"start": "13:00", "end": "14:00", "label": "1:00 PM \u2013 2:00 PM", "title": "Session 4: Bridging Traditional Radio and Digital/Social Media", "speaker": "Ricky Brozas", "speakerRole": "Station Manager of IR Calbayog City, Samar"}, {"start": "14:00", "end": "15:00", "label": "2:00 PM \u2013 3:00 PM", "title": "Session 5: Technology for Collaborative News Anchoring", "details": ["Introduction to the technology or application that will allow anchors from different Infinite Radio stations to collaborate and possibly deliver news together remotely"]}, {"start": "15:00", "end": "17:00", "label": "3:00 PM \u2013 5:00 PM", "title": "Working Snacks & Technical Staff Demonstration", "details": ["System overview", "Connection of different stations", "Audio synchronization", "Communication between anchors and technical staff", "Troubleshooting common technical issues"]}, {"start": "17:00", "end": "18:00", "label": "5:00 PM \u2013 6:00 PM", "title": "Orientation on the Application/Platform to Be Used for Collaborative News Anchoring"}, {"start": "18:00", "end": "18:00", "label": "6:00 PM", "title": "End of Day 2 Session / Dinner", "details": ["Infinite Radio Fellowship Night / Team Building / Entertainment Program"]}, {"start": "22:00", "end": "22:00", "label": "10:00 PM onwards", "title": "Free Time / Rest"}]}, "day3": {"label": "Day 3", "date": "2026-09-23", "title": "Hands-On Workshop, Simulation and Commitment", "theme": "Putting Collaboration Into Action", "items": [{"start": "06:30", "end": "07:30", "label": "6:30 AM \u2013 7:30 AM", "title": "Breakfast"}, {"start": "07:30", "end": "08:30", "label": "7:30 AM \u2013 8:30 AM", "title": "Personal Preparation / Assembly / Recap of Day 2", "details": ["Opening Prayer"]}, {"start": "08:30", "end": "09:30", "label": "8:30 AM \u2013 9:30 AM", "title": "Hands-On Workshop Part 1: Application Setup and Familiarization", "details": ["Account setup or access", "Connecting devices", "Basic functions", "Communication features"]}, {"start": "09:30", "end": "10:30", "label": "9:30 AM \u2013 10:30 AM", "title": "Working Snacks & Hands-On Workshop Part 2: Remote Connection and News Anchoring Practice", "details": ["Participants will be grouped according to different stations and will practice connecting and communicating through the system"]}, {"start": "10:30", "end": "12:00", "label": "10:30 AM \u2013 12:00 NN", "title": "Technical Troubleshooting and Open Forum"}, {"start": "11:00", "end": "12:00", "label": "11:00 AM \u2013 12:00 NN", "title": "Lunch"}, {"start": "13:00", "end": "14:00", "label": "1:00 PM \u2013 2:00 PM", "title": "Main Activity: Nationwide Collaborative News Anchoring Simulation", "details": ["Anchor 1 \u2013 Infinite Radio Station A", "Anchor 2 \u2013 Infinite Radio Station B", "Anchor 3 \u2013 Infinite Radio Station C", "Technical Team \u2013 Monitoring and Managing the Connection", "Participants will conduct a simulated live news broadcast using the agreed technology and standardized news format."]}, {"start": "14:00", "end": "15:00", "label": "2:00 PM \u2013 3:00 PM", "title": "Evaluation and Feedback"}, {"start": "15:00", "end": "15:15", "label": "3:00 PM \u2013 3:15 PM", "title": "Snacks Break"}, {"start": "15:15", "end": "16:15", "label": "3:15 PM \u2013 4:15 PM", "title": "Presentation and Approval of Conference Outputs", "details": ["1. Standard format for writing news headlines", "2. Standardized Infinite Radio news intros and outros", "3. Guidelines to avoid overlapping or duplicate news", "4. News sharing and coordination procedure", "5. Technical guidelines for collaborative anchoring", "6. Initial implementation plan for nationwide collaborative news delivery"]}, {"start": "16:15", "end": "16:45", "label": "4:15 PM \u2013 4:45 PM", "title": "Commitment Setting: \"One Infinite Radio News Network\"", "details": ["Each participating station presents its commitment and readiness for implementation"]}, {"start": "16:45", "end": "17:00", "label": "4:45 PM \u2013 5:00 PM", "title": "Closing Message", "details": ["Awarding / Distribution of Certificates / Group Photo"]}, {"start": "17:00", "end": "18:00", "label": "5:00 PM onwards", "title": "End of IR 2026 Conference / Dinner"}]}};
 
 const dayKeys = Object.keys(SCHEDULE);
+const TEAM = [
+  { role: "Station Manager", name: "Ulysis Salabao" },
+  { role: "Admin", name: "Juliet Salabao" },
+  { role: "Admin Staff", name: "Diomel \u201cToto\u201d Ca\u00f1ares" },
+  { role: "Technical Director", name: "Rowel Salabao" },
+  { role: "Technician", name: "Marian Avila" },
+  { role: "IT/Tech Support", name: "Joan \u201cAte Jo\u201d Anunciado" },
+  { role: "IT/Tech Support", name: "Romeo \u201cRox Teddy\u201d Juarez, Jr." },
+  { role: "Program Director/DJ/Anchor", name: "Geomar \u201cDJ Andy\u201d Macsabejon" },
+  { role: "Anchor", name: "\u201cKagawad\u201d Lito Gibertas" },
+  { role: "DJ/Anchor", name: "Princess Aletha \u201cInday Princess\u201d Consigna" },
+  { role: "DJ/Anchor", name: "Marvin Napoco" },
+  { role: "DJ", name: "Visiel \u201cDJ Vee\u201d Villegas" },
+  { role: "Field Reporter", name: "GM Estrella" }
+];
+const TEAM_KEY = "team";
 const tabsEl = document.getElementById('tabs');
 const panelsEl = document.getElementById('panels');
 
 function initials(str) {
   return str.split(' ').map(w => w[0] || '').join('').slice(0,2).toUpperCase();
+}
+
+function teamInitials(str) {
+  const clean = str.replace(/[\u201c\u201d"][^\u201c\u201d"]*[\u201c\u201d"]/g, '').replace(/\s+/g, ' ').trim();
+  const parts = clean.split(' ').filter(Boolean);
+  const first = parts[0] ? parts[0][0] : '';
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+  return (first + last).toUpperCase();
 }
 
 function toMinutes(hhmm) {
@@ -289,15 +344,37 @@ function renderDay(key, day) {
   );
 }
 
+function renderTeamPanel() {
+  const cardsHtml = TEAM.map((p, i) =>
+    '<div class="team-card" data-idx="' + i + '">' +
+      '<div class="team-avatar">' + teamInitials(p.name) + '</div>' +
+      '<div class="team-role">' + p.role + '</div>' +
+      '<div class="team-name">' + p.name + '</div>' +
+    '</div>'
+  ).join('');
+  return (
+    '<div class="day-panel" id="panel-' + TEAM_KEY + '">' +
+      '<div class="day-head">' +
+        '<div class="theme">Infinite Radio Surigao</div>' +
+        '<h2>Behind Infinite Radio</h2>' +
+        '<div class="date">The team making DXSJ 93.3 happen</div>' +
+      '</div>' +
+      '<div class="team-grid">' + cardsHtml + '</div>' +
+    '</div>'
+  );
+}
+
 function render() {
-  tabsEl.innerHTML = dayKeys.map(key => {
+  const tabItems = dayKeys.map(key => {
     const day = SCHEDULE[key];
     const today = isToday(day);
     return '<div class="tab' + (today ? ' is-today' : '') + '" data-key="' + key + '">' +
       day.label + '<span class="live-dot"></span></div>';
-  }).join('');
+  });
+  tabItems.push('<div class="tab" data-key="' + TEAM_KEY + '">Team</div>');
+  tabsEl.innerHTML = tabItems.join('');
 
-  panelsEl.innerHTML = dayKeys.map(key => renderDay(key, SCHEDULE[key])).join('');
+  panelsEl.innerHTML = dayKeys.map(key => renderDay(key, SCHEDULE[key])).join('') + renderTeamPanel();
 
   let activeKey = dayKeys.find(k => isToday(SCHEDULE[k])) || dayKeys[0];
   setActive(activeKey);
@@ -329,7 +406,7 @@ function setupScrollReveal() {
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.day-panel.active .item').forEach(el => {
+  document.querySelectorAll('.day-panel.active .item, .day-panel.active .team-card').forEach(el => {
     revealObserver.observe(el);
   });
 }
