@@ -190,13 +190,26 @@
     -webkit-backdrop-filter: blur(6px);
   }
   #continueGate.show { display: flex; }
-  #continueGate button {
-    width: 100%;
+
+  .splash-text {
     max-width: 380px;
-    padding: 26px 22px;
-    font-size: 1.15rem;
-    line-height: 1.4;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.5;
+    background: linear-gradient(90deg, #4d7bff, #ffffff 45%, #ff3b4e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
+  .splash-spinner {
+    margin: 22px auto 0;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.2);
+    border-top-color: #4d7bff;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -240,14 +253,17 @@
   </div>
 
   <div id="continueGate">
-    <button type="button" id="continueBtn">Welcome to Infinite Radio Conference 2026 &mdash; tap to continue</button>
+    <div style="text-align:center;">
+      <div class="splash-text">Welcome to Infinite Radio Conference 2026</div>
+      <div class="splash-spinner"></div>
+    </div>
   </div>
 
 <script>
 /* ===================== EDIT THIS ===================== *
  * Paste your Apps Script Web App URL here (ends in /exec).
  * ======================================================= */
-var SCRIPT_URL = https://script.google.com/macros/s/AKfycbzlg8D9idFdK5scrpGuCPkiHPeHoXDfO9YE6xrcYdaZLCTnraXFGtVbOxnyIoubxrtR/exec;
+var SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE';
 
 var PROGRAM_URL = 'https://dxsjinfiniteradiosurigao.github.io/InfiniteRadioConference2026/';
 var DEVICE_KEY = 'infiniteRadioWheelEntrySubmitted';
@@ -278,18 +294,18 @@ var stationInput = document.getElementById('stationInput');
 var btn = document.getElementById('submitBtn');
 var msg = document.getElementById('msg');
 var continueGate = document.getElementById('continueGate');
-var continueBtn = document.getElementById('continueBtn');
+var SPLASH_DELAY_MS = 1800; // how long the splash shows before redirecting
 
 // This page is served directly by GitHub Pages (not embedded in any
 // sandboxed iframe), so a plain top-level navigation always works --
-// no window.top tricks needed.
+// no window.top tricks or user click needed.
 function goToProgram() {
   window.location.href = PROGRAM_URL;
 }
-continueBtn.addEventListener('click', goToProgram);
 
 function showContinueGate() {
   continueGate.classList.add('show');
+  setTimeout(goToProgram, SPLASH_DELAY_MS);
 }
 
 if (localStorage.getItem(DEVICE_KEY)) {
